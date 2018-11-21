@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".lista_chat" />
         <activity android:name=".IndividualChat" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>

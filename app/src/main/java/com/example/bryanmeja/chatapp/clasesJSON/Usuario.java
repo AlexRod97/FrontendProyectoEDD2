@@ -7,6 +7,7 @@ public class Usuario {
     String password;
     String email;
     String id;
+    String apellido;
 
     public Usuario(String _id, String nombre, String email, String username, String password){
 
