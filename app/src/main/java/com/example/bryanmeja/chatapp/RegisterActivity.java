@@ -11,7 +11,8 @@ import com.example.bryanmeja.chatapp.clasesJSON.Usuario;
 
 public class RegisterActivity extends AppCompatActivity {
    TextView btnRegistrar, etID, etName, etEmail, etUserName, etPassword;
-    Usuario user;
+   //cambiar el public static
+    public static Usuario user;
     String id, name, email, userName, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

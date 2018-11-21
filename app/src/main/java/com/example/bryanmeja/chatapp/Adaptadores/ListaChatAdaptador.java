@@ -47,6 +47,8 @@ public class ListaChatAdaptador extends BaseAdapter {
         final View vista = inflater.inflate(R.layout.elemento_lista_chat, null);
         TextView nombre =  (TextView) vista.findViewById(R.id.tvNombreLista);
 
+        //de todas las coincidencias, debo enviar todas los nombres no repetidos de los usuarios encontrados con el
+        //que el usuario ha estado chateando
         String usuario = usuariosChat.get(position);
         nombre.setText(usuario);
 

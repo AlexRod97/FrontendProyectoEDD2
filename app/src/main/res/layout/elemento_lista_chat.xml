@@ -15,8 +15,8 @@
 
     <TextView
         android:id="@+id/tvNombreLista"
-        android:layout_width="121dp"
-        android:layout_height="37dp"
+        android:layout_width="346dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"

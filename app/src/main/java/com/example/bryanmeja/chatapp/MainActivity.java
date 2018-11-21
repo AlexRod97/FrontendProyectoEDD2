@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnOk = findViewById(R.id.tvLogin);
-        btnRegister = findViewById(R.id.tvRegister);
+        btnOk = (TextView) findViewById(R.id.tvLogin);
+        btnRegister = (TextView) findViewById(R.id.tvRegister);
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
