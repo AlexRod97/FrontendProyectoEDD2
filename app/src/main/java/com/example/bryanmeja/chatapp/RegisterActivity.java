@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,11 +17,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class RegisterActivity extends AppCompatActivity {
-   TextView btnRegistrar, etName, etEmail, etUserName, etPassword;
-   //cambiar el public static
-     Usuario user;
-     String name, email, userName, password;
 
+    EditText etName, etEmail, etUserName, etPassword;
+    Usuario user;
+    String name, email, userName, password;
+    TextView btnRegistrar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,6 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //id = etID.getText().toString();
                 name = etName.getText().toString();
                 email = etEmail.getText().toString();
                 userName = etUserName.getText().toString();
