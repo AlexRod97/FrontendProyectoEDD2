@@ -7,6 +7,10 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.bryanmeja.chatapp.services.API;
+
+import retrofit2.Retrofit;
+
 public class MainActivity extends AppCompatActivity {
     TextView btnOk;
     TextView btnRegister;
@@ -15,6 +19,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.0.7:3000")
+                .build();
+
+        //crea la interfaz para ingreso
+        API api = retrofit.create(API.class);
+
         btnOk = (TextView) findViewById(R.id.tvLogin);
         btnRegister = (TextView) findViewById(R.id.tvRegister);
 
