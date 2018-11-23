@@ -20,13 +20,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.7:3000")
-                .build();
-
-        //crea la interfaz para ingreso
-        API api = retrofit.create(API.class);
-
         btnOk = (TextView) findViewById(R.id.tvLogin);
         btnRegister = (TextView) findViewById(R.id.tvRegister);
 

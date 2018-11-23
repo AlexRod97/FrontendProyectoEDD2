@@ -1,12 +1,19 @@
 package com.example.bryanmeja.chatapp.clasesJSON;
 
+import com.google.gson.annotations.SerializedName;
+
 public class messages {
 
-    String usuario_emisor;
-    String usuario_receptor;
-    String mensaje;
-    boolean esArchivo;
-    String nombreArchivo;
+    @SerializedName("usuario_emisor")
+    public String usuario_emisor;
+    @SerializedName("usuario_receptor")
+    public String usuario_receptor;
+    @SerializedName("mensaje")
+    public String mensaje;
+    @SerializedName("esArchivo")
+    public boolean esArchivo;
+    @SerializedName("nombreArchivo")
+    public String nombreArchivo;
 
     public messages(String usuario_emisor, String usuario_receptor, String mensaje, boolean esArchivo, String nombreArchivo){
 
@@ -15,6 +22,5 @@ public class messages {
         this.mensaje = mensaje;
         this.esArchivo = esArchivo;
         this.nombreArchivo = nombreArchivo;
-
     }
 }

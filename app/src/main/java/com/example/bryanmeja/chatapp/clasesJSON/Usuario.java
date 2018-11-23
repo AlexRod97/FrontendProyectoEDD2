@@ -1,17 +1,23 @@
 package com.example.bryanmeja.chatapp.clasesJSON;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Usuario {
 
-    String nombre;
-    String username;
-    String password;
-    String email;
-    String id;
-    String apellido;
+    @SerializedName("nombre")
+    public String nombre;
+    @SerializedName("username")
+    public String username;
+    @SerializedName("password")
+    public String password;
+    @SerializedName("email")
+    public String email;
+    @SerializedName("_id")
+    public String id;
 
-    public Usuario(String _id, String nombre, String email, String username, String password){
 
-        this.id = _id;
+    public Usuario(String nombre, String email, String username, String password){
+
         this.email = email;
         this.username = username;
         this.password = password;
