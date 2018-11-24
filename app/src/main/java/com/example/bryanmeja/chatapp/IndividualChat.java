@@ -203,10 +203,16 @@ public class IndividualChat extends AppCompatActivity {
                 if(data != null) {
                     Uri uri = data.getData();
                     path = uri.getPath();
-                    path = path.substring(path.indexOf(":")+1);
-                    mainData = readText(path);mainData = readText(path);
-                    compressedFile = compressionLZW.compress(mainData);
-                    Toast.makeText(this, "Texto obtenido", Toast.LENGTH_SHORT).show();
+                    if(path.endsWith(".txt")) {
+                        path = path.substring(path.indexOf(":")+1);
+                        mainData = readText(path);
+                        compressedFile = compressionLZW.compress(mainData);
+                        Toast.makeText(this, "Texto obtenido", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        compressionLZW.ImageCompress(path);
+                        Toast.makeText(this, "Imagen obtenida", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }
