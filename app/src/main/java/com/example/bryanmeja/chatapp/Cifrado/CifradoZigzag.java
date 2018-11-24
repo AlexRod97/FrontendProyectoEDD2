@@ -154,7 +154,7 @@ public class CifradoZigzag {
                 }
             }
         }
-        SaveText(fileName,result.toString());
+        //SaveText(fileName,result.toString());
         return result.toString();
     }
 

@@ -19,6 +19,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.bryanmeja.chatapp.Adaptadores.BubblesInflater;
+import com.example.bryanmeja.chatapp.Cifrado.CifradoZigzag;
 import com.example.bryanmeja.chatapp.Compresion.Compresion;
 import com.example.bryanmeja.chatapp.Compresion.ConvertBytes;
 import com.example.bryanmeja.chatapp.clasesJSON.user;
@@ -51,6 +52,7 @@ public class IndividualChat extends AppCompatActivity {
     String mainData,path, base64Decode, fileName, compressedFile;
     File decompressionFile;
     byte[] bytesFromFile;
+    CifradoZigzag zigzag = new CifradoZigzag();
 
 
     @Override
@@ -107,11 +109,11 @@ public class IndividualChat extends AppCompatActivity {
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //aqui se sube a la DB
                 messages message = new messages(
                         MainActivity.usuarioActual.username,
                         MainActivity.usuarioReceptor,
-                        textoMensaje.getText().toString(),
+                        zigzag.Cifrar(textoMensaje.getText().toString(), 5/*MainActivity.usuarioActual.username.length()*/, ""),
                         false, "mensaje"
                 );
                 Call<messages> call = api.sendMessage(message);

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.bryanmeja.chatapp.Cifrado.CifradoZigzag;
 import com.example.bryanmeja.chatapp.MainActivity;
 import com.example.bryanmeja.chatapp.R;
 import com.example.bryanmeja.chatapp.clasesJSON.user;
@@ -21,6 +22,7 @@ public class BubblesInflater extends BaseAdapter {
     Context contexto;
     List<messages> mensajes;
     user userLoggeado;
+    CifradoZigzag zigzag = new CifradoZigzag();
 
     public BubblesInflater (Context context, List<messages> mensajes, user user){
 
@@ -58,7 +60,7 @@ public class BubblesInflater extends BaseAdapter {
                 TextView mensaje = view.findViewById(R.id.their_body);
                 TextView name = view.findViewById(R.id.their_name);
                 name.setText(mensajes.get(position).usuario_emisor);
-                mensaje.setText(mensajes.get(position).mensaje);
+                mensaje.setText(zigzag.Descifrar(mensajes.get(position).mensaje, 5/*mensajes.get(position).usuario_emisor.length()*/));
             }
 
         }
