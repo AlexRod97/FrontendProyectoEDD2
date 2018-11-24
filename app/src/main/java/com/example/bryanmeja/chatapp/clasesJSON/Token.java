@@ -1,6 +1,9 @@
 package com.example.bryanmeja.chatapp.clasesJSON;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Token {
 
-    public static String token;
+    @SerializedName("token")
+    public String token;
 }

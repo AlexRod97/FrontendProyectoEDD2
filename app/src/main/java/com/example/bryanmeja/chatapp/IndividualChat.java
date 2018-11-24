@@ -83,7 +83,7 @@ public class IndividualChat extends AppCompatActivity {
 
         final API api = retrofit.create(API.class);
 
-        api.receiveMessages().enqueue(new Callback<List<messages>>() {
+        api.receiveMessages(MainActivity.TokenString).enqueue(new Callback<List<messages>>() {
             @Override
             public void onResponse(Call<List<messages>> call, Response<List<messages>> response) {
                 listaMensajes = response.body();
@@ -95,6 +95,8 @@ public class IndividualChat extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<messages>> call, Throwable t) {
                 Toast.makeText(IndividualChat.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(IndividualChat.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

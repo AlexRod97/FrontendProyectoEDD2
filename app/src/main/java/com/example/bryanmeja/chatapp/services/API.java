@@ -12,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface API {
@@ -20,7 +21,7 @@ public interface API {
     Call<messages> sendMessage(@Body messages mensaje);
 
     @GET("/messages/receive")
-    Call<List<messages>> receiveMessages();
+    Call<List<messages>> receiveMessages(@Header("Authorization") String token);
 
     @POST("/users/signup")
     Call<user> signup(@Body user nuevoUser);
@@ -29,4 +30,10 @@ public interface API {
     @FormUrlEncoded
     Call<Token> login(@Field("email") String email, @Field("password") String password);
 
+    @GET("/users/obtain")
+    Call<List<user>> obtainUser(@Header("Authorization") String token);
+
+    @POST("/users/single")
+    @FormUrlEncoded
+    Call<user> obtainSingle(@Field("email") String email);
 }
