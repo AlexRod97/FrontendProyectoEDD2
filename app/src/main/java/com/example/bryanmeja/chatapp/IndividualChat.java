@@ -160,6 +160,23 @@ public class IndividualChat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(IndividualChat.this, "Chat actualizado", Toast.LENGTH_SHORT).show();
+
+                api.receiveMessages(MainActivity.TokenString).enqueue(new Callback<List<messages>>() {
+                    @Override
+                    public void onResponse(Call<List<messages>> call, Response<List<messages>> response) {
+                        listaMensajes = response.body();
+
+
+                        //intanciar mi BaseAdapter de chats
+                        LvMensajes.setAdapter(new BubblesInflater(IndividualChat.this, listaMensajes,MainActivity.usuarioActual));
+                    }
+                    @Override
+                    public void onFailure(Call<List<messages>> call, Throwable t) {
+                        Toast.makeText(IndividualChat.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(IndividualChat.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
         });
 
