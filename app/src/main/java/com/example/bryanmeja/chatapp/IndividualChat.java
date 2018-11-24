@@ -2,10 +2,12 @@ package com.example.bryanmeja.chatapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.bryanmeja.chatapp.Adaptadores.BubblesInflater;
@@ -26,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class IndividualChat extends AppCompatActivity {
 
     EditText textoMensaje;
-    ImageView btnEnviar;
+    ImageView btnEnviar, btnOpciones;
     List<messages> listaMensajes;
     ListView LvMensajes;
 
@@ -36,7 +38,7 @@ public class IndividualChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_chat);
         LvMensajes = findViewById(R.id.lv_messages);
-
+        btnOpciones = findViewById(R.id.btnOptions);
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
@@ -91,6 +93,30 @@ public class IndividualChat extends AppCompatActivity {
 
                     }
                 });
+            }
+        });
+
+        btnOpciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(IndividualChat.this, btnOpciones);
+                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if (menuItem.getTitle().equals("Imágenes")) {
+                            Toast.makeText(IndividualChat.this, "Vamos a mandar imágenes", Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+                        else
+                        if(menuItem.getTitle().equals("Texto")) {
+                            Toast.makeText(IndividualChat.this, "Vamos a mandar texto", Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
             }
         });
 

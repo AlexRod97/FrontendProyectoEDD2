@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Imágenes"
+        android:id="@+id/images"
+        android:background="@drawable/ic_action_pictures"
+        android:paddingHorizontal="10dp"/>
+
+    <item
+        android:title="Texto"
+        android:id="@+id/text"
+        android:icon="@drawable/ic_action_text"
+        android:paddingHorizontal="10dp"/>
+
+</menu>
