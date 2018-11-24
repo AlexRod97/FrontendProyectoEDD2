@@ -45,7 +45,7 @@ public class IndividualChat extends AppCompatActivity {
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("http://192.168.43.63:3000")
+                .baseUrl("http://192.168.0.21:3000")
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         final API api = retrofit.create(API.class);

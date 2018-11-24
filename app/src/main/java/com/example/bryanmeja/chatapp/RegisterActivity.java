@@ -1,5 +1,6 @@
 package com.example.bryanmeja.chatapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
                 password = etPassword.getText().toString();
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://192.168.43.63:3000")
+                        .baseUrl("http://192.168.0.21:3000")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
@@ -54,12 +55,15 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<com.example.bryanmeja.chatapp.clasesJSON.user> call, Response<com.example.bryanmeja.chatapp.clasesJSON.user> response) {
                         Toast.makeText(RegisterActivity.this, "Sended", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override
                     public void onFailure(Call<com.example.bryanmeja.chatapp.clasesJSON.user> call, Throwable t) {
                         Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        startActivity(intent);
                     }
                 });
 
