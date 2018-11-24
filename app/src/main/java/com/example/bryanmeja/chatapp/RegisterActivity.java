@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
                 password = etPassword.getText().toString();
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://192.168.0.21:3000")
+                        .baseUrl("http://192.168.43.63:3000")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 

@@ -11,9 +11,6 @@ import android.widget.Toast;
 
 import com.example.bryanmeja.chatapp.clasesJSON.Token;
 import com.example.bryanmeja.chatapp.services.API;
-
-import com.example.bryanmeja.chatapp.clasesJSON.Token;
-import com.example.bryanmeja.chatapp.services.API;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,17 +28,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnOk = (TextView) findViewById(R.id.tvLogin);
-        btnRegister = (TextView) findViewById(R.id.tvRegister);
-        etEmail = (EditText)findViewById(R.id.etEmail);
-        etPassword = (EditText) findViewById(R.id.etPassword);
+        btnOk = findViewById(R.id.tvLogin);
+        btnRegister = findViewById(R.id.tvRegister);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
 
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.21:3000")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        final API api = retrofit.create(API.class);
 
         btnOk.setOnClickListener(new View.OnClickListener() {
 
@@ -50,6 +41,26 @@ public class MainActivity extends AppCompatActivity {
 
                 email = etEmail.getText().toString();
                 password = etPassword.getText().toString();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://192.168.43.63:3000")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                API api = retrofit.create(API.class);
+
+                api.login(email, password).enqueue(new Callback<Token>() {
+                    @Override
+                    public void onResponse(Call<Token> call, Response<Token> response) {
+                        Token.token = response.body().toString();
+                        Toast.makeText(MainActivity.this, "Sended", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Token> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
 
             }
