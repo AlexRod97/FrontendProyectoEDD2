@@ -173,7 +173,7 @@ public class Compresion {
             //bw.write(compression.toString());
             output = map.toString() + compression.toString();
             bw.close();
-            listado.EscribirArchivo(originalFilename, file.getAbsolutePath(), compressedFilename, originalFilePath);
+            //listado.EscribirArchivo(originalFilename, file.getAbsolutePath(), compressedFilename, originalFilePath);
         }
         catch(IOException ex)
         {

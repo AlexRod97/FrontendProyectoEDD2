@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.example.bryanmeja.chatapp.clasesJSON.Token;
 import com.example.bryanmeja.chatapp.services.API;
 
+import com.example.bryanmeja.chatapp.clasesJSON.Token;
+import com.example.bryanmeja.chatapp.services.API;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,18 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
                 email = etEmail.getText().toString();
                 password = etPassword.getText().toString();
-
-                api.login(email, password).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Toast.makeText(MainActivity.this, "Exito", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    }
-                });
 
 
             }

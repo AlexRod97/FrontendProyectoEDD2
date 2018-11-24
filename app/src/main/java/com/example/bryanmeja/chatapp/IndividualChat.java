@@ -45,7 +45,7 @@ public class IndividualChat extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 42;
     Compresion compressionLZW = new Compresion();
     EditText textoMensaje;
-    ImageView btnEnviar, btnOpciones;
+    ImageView btnEnviar, btnOpciones, btnUpdate;
     List<messages> listaMensajes;
     ListView LvMensajes;
     String mainData,path, base64Decode, fileName, compressedFile;
@@ -59,6 +59,7 @@ public class IndividualChat extends AppCompatActivity {
         setContentView(R.layout.activity_individual_chat);
         LvMensajes = findViewById(R.id.lv_messages);
         btnOpciones = findViewById(R.id.btnOptions);
+        btnUpdate = findViewById(R.id.btnUpdate);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -144,14 +145,18 @@ public class IndividualChat extends AppCompatActivity {
                         else
                         if(menuItem.getTitle().equals("Texto")) {
                             fileSearch();
-                            //compressionLZW.setFilenames(fileName, decompressionFile.getAbsolutePath(),decompressionFile);
-                            //compressedFile = compressionLZW.compress(mainData);
-                            //Toast.makeText(IndividualChat.this, "Vamos a mandar texto", Toast.LENGTH_SHORT).show();
                         }
                         return true;
                     }
                 });
                 popupMenu.show();
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(IndividualChat.this, "Chat actualizado", Toast.LENGTH_SHORT).show();
             }
         });
 
