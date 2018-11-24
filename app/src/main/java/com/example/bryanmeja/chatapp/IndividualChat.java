@@ -186,7 +186,6 @@ public class IndividualChat extends AppCompatActivity {
             bytesFromFile = ConvertBytes.getBytes(file);
             base64Decode = Base64.encodeToString(bytesFromFile, Base64.DEFAULT);
             base64Decode = base64Decode.replace("\n","");
-            //SaveText("outputFileBase64",base64Decode);
             decompressionFile = file;
 
         }
