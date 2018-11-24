@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.bryanmeja.chatapp.MainActivity;
 import com.example.bryanmeja.chatapp.R;
 import com.example.bryanmeja.chatapp.clasesJSON.user;
 import com.example.bryanmeja.chatapp.clasesJSON.messages;
@@ -48,7 +49,7 @@ public class BubblesInflater extends BaseAdapter {
         View view = convertView;
         if (view == null){
 
-            if (mensajes.get(position).usuario_emisor.compareTo(userLoggeado.username) == 0){
+            if (mensajes.get(position).usuario_emisor.compareTo(MainActivity.usuarioReceptor) == 0){
                 view = inflater.inflate(R.layout.my_message, null);
                 TextView mensaje = view.findViewById(R.id.message_body);
                 mensaje.setText(mensajes.get(position).mensaje);
