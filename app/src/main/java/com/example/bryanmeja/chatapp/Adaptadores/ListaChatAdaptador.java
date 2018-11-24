@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.bryanmeja.chatapp.IndividualChat;
+import com.example.bryanmeja.chatapp.MainActivity;
 import com.example.bryanmeja.chatapp.R;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class ListaChatAdaptador extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final View vista = inflater.inflate(R.layout.elemento_lista_chat, null);
-        TextView nombre =  (TextView) vista.findViewById(R.id.tvNombreLista);
+        final TextView nombre =  (TextView) vista.findViewById(R.id.tvNombreLista);
 
         //de todas las coincidencias, debo enviar todas los nombres no repetidos de los usuarios encontrados con el
         //que el usuario ha estado chateando
@@ -55,6 +56,7 @@ public class ListaChatAdaptador extends BaseAdapter {
         nombre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.usuarioReceptor = nombre.toString();
                 Intent chat = new Intent(contexto, IndividualChat.class);
                 contexto.startActivity(chat);
             }

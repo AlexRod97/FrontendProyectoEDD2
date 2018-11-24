@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     String email, password;
     public static String TokenString;
     public static user  usuarioActual;
+    public static String usuarioReceptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

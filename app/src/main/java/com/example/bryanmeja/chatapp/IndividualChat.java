@@ -89,9 +89,9 @@ public class IndividualChat extends AppCompatActivity {
             public void onResponse(Call<List<messages>> call, Response<List<messages>> response) {
                 listaMensajes = response.body();
 
-                user user = new user("Bryan", "bty@test.com", "Bryan0xFF", "abc");
+
                 //intanciar mi BaseAdapter de chats
-                LvMensajes.setAdapter(new BubblesInflater(IndividualChat.this, listaMensajes,user));
+                LvMensajes.setAdapter(new BubblesInflater(IndividualChat.this, listaMensajes,MainActivity.usuarioActual));
             }
             @Override
             public void onFailure(Call<List<messages>> call, Throwable t) {
@@ -109,8 +109,8 @@ public class IndividualChat extends AppCompatActivity {
             public void onClick(View v) {
 
                 messages message = new messages(
-                        "AlexRod97",
-                        "Bryan0xFF",
+                        MainActivity.usuarioActual.username,
+                        MainActivity.usuarioReceptor,
                         textoMensaje.getText().toString(),
                         false, "mensaje"
                 );
