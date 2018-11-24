@@ -44,22 +44,34 @@ public class lista_chat extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<user>> call, Response<List<user>> response) {
 
-                for (int i = 0; i < response.body().size(); i++){
+                if (response.isSuccessful()){
 
-                    if (response.body().get(i).nombre.equals(MainActivity.usuarioActual.nombre)){
-                        continue;
-                    }else{
-                        usuarios.add(response.body().get(i).nombre);
+                    for (int i = 0; i < response.body().size(); i++){
+
+                        if (response.body().get(i).nombre.equals(MainActivity.usuarioActual.nombre)){
+                            continue;
+                        }else{
+                            usuarios.add(response.body().get(i).nombre);
+                        }
+
+                        lista_chats.setAdapter(new ListaChatAdaptador(lista_chat.this, usuarios));
+
                     }
-
-                    lista_chats.setAdapter(new ListaChatAdaptador(lista_chat.this, usuarios));
-
                 }
+                else {
+
+                    Toast.makeText(lista_chat.this, "JWT invalido, regresando login", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(lista_chat.this, MainActivity.class);
+                    startActivity(intent);
+                }
+
+
             }
 
             @Override
             public void onFailure(Call<List<user>> call, Throwable t) {
-                Toast.makeText(lista_chat.this, t.getMessage(), Toast.LENGTH_LONG).show();
+
+                Toast.makeText(lista_chat.this, "JWT invalido, regresando login", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(lista_chat.this, MainActivity.class);
                 startActivity(intent);
             }

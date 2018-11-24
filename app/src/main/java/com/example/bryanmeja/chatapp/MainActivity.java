@@ -50,21 +50,9 @@ public class MainActivity extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-                API api = retrofit.create(API.class);
+                final API api = retrofit.create(API.class);
 
-                api.obtainSingle(email).enqueue(new Callback<user>() {
-                    @Override
-                    public void onResponse(Call<user> call, Response<user> response) {
-                        usuarioActual = response.body();
-                        Intent a = new Intent(MainActivity.this, lista_chat.class);
-                        startActivity(a);
-                    }
 
-                    @Override
-                    public void onFailure(Call<user> call, Throwable t) {
-                        Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
 
                 api.login(email, password).enqueue(new Callback<Token>() {
                     @Override
@@ -72,6 +60,20 @@ public class MainActivity extends AppCompatActivity {
                         Token token = response.body();
                         TokenString = token.token;
                         Toast.makeText(MainActivity.this, "Verificacion Exitosa", Toast.LENGTH_LONG).show();
+
+                        api.obtainSingle(email).enqueue(new Callback<user>() {
+                            @Override
+                            public void onResponse(Call<user> call, Response<user> response) {
+                                usuarioActual = response.body();
+                                Intent a = new Intent(MainActivity.this, lista_chat.class);
+                                startActivity(a);
+                            }
+
+                            @Override
+                            public void onFailure(Call<user> call, Throwable t) {
+                                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
 
                     }
 
