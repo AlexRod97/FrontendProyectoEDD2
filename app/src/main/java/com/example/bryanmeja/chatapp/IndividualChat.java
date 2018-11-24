@@ -1,7 +1,15 @@
 package com.example.bryanmeja.chatapp;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -11,10 +19,16 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.bryanmeja.chatapp.Adaptadores.BubblesInflater;
+import com.example.bryanmeja.chatapp.Compresion.Compresion;
+import com.example.bryanmeja.chatapp.Compresion.ConvertBytes;
 import com.example.bryanmeja.chatapp.clasesJSON.user;
 import com.example.bryanmeja.chatapp.clasesJSON.messages;
 import com.example.bryanmeja.chatapp.services.API;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -27,10 +41,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class IndividualChat extends AppCompatActivity {
 
+    private static final int PERMISSION_REQUEST_STORAGE = 1000;
+    private static final int READ_REQUEST_CODE = 42;
+    Compresion compressionLZW = new Compresion();
     EditText textoMensaje;
     ImageView btnEnviar, btnOpciones;
     List<messages> listaMensajes;
     ListView LvMensajes;
+    String mainData,path, base64Decode, fileName, compressedFile;
+    File decompressionFile;
+    byte[] bytesFromFile;
 
 
     @Override
@@ -39,6 +59,17 @@ public class IndividualChat extends AppCompatActivity {
         setContentView(R.layout.activity_individual_chat);
         LvMensajes = findViewById(R.id.lv_messages);
         btnOpciones = findViewById(R.id.btnOptions);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},PERMISSION_REQUEST_STORAGE);
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSION_REQUEST_STORAGE);
+        }
+
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
@@ -106,12 +137,16 @@ public class IndividualChat extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         if (menuItem.getTitle().equals("Imágenes")) {
+
                             Toast.makeText(IndividualChat.this, "Vamos a mandar imágenes", Toast.LENGTH_SHORT).show();
                             return true;
                         }
                         else
                         if(menuItem.getTitle().equals("Texto")) {
-                            Toast.makeText(IndividualChat.this, "Vamos a mandar texto", Toast.LENGTH_SHORT).show();
+                            fileSearch();
+                            //compressionLZW.setFilenames(fileName, decompressionFile.getAbsolutePath(),decompressionFile);
+                            //compressedFile = compressionLZW.compress(mainData);
+                            //Toast.makeText(IndividualChat.this, "Vamos a mandar texto", Toast.LENGTH_SHORT).show();
                         }
                         return true;
                     }
@@ -121,4 +156,57 @@ public class IndividualChat extends AppCompatActivity {
         });
 
     }
+
+    private void fileSearch() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/*");
+        startActivityForResult(intent,READ_REQUEST_CODE);
+    }
+
+    private String readText(String input) {
+        File file = new File(Environment.getExternalStorageDirectory(),input);
+        StringBuilder text  = new StringBuilder();
+        fileName = file.getName();
+        decompressionFile = file;
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while((line = br.readLine()) != null) {
+                text.append(line);
+            }
+            br.close();
+
+            bytesFromFile = ConvertBytes.getBytes(file);
+            base64Decode = Base64.encodeToString(bytesFromFile, Base64.DEFAULT);
+            base64Decode = base64Decode.replace("\n","");
+            //SaveText("outputFileBase64",base64Decode);
+            decompressionFile = file;
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return base64Decode.toString();
+    }
+
+    protected  void onActivityResult (int requestCode, int resultCode, Intent data) {
+        try {
+            if(requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+                if(data != null) {
+                    Uri uri = data.getData();
+                    path = uri.getPath();
+                    path = path.substring(path.indexOf(":")+1);
+                    mainData = readText(path);mainData = readText(path);
+                    compressedFile = compressionLZW.compress(mainData);
+                    Toast.makeText(this, "Texto obtenido", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        catch(Exception ex) {
+            Toast.makeText(this, "Error en la selección del archivo", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
