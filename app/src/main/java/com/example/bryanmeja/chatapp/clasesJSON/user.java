@@ -2,7 +2,7 @@ package com.example.bryanmeja.chatapp.clasesJSON;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Usuario {
+public class user {
 
     @SerializedName("nombre")
     public String nombre;
@@ -16,11 +16,13 @@ public class Usuario {
     public String id;
 
 
-    public Usuario(String nombre, String email, String username, String password){
+
+    public user(String nombre, String email, String username, String password){
 
         this.email = email;
         this.username = username;
         this.password = password;
         this.nombre = nombre;
     }
+
 }

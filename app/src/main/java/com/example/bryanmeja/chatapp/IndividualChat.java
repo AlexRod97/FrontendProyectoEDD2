@@ -1,6 +1,5 @@
 package com.example.bryanmeja.chatapp;
 
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,29 +9,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.bryanmeja.chatapp.Adaptadores.BubblesInflater;
-import com.example.bryanmeja.chatapp.clasesJSON.ListadoMensajes;
-import com.example.bryanmeja.chatapp.clasesJSON.Usuario;
+import com.example.bryanmeja.chatapp.clasesJSON.user;
 import com.example.bryanmeja.chatapp.clasesJSON.messages;
 import com.example.bryanmeja.chatapp.services.API;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-
-import java.lang.reflect.Type;
-import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,7 +45,7 @@ public class IndividualChat extends AppCompatActivity {
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("http://10.200.215.34:3000")
+                .baseUrl("http://192.168.43.63:3000")
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         final API api = retrofit.create(API.class);
@@ -71,7 +55,7 @@ public class IndividualChat extends AppCompatActivity {
             public void onResponse(Call<List<messages>> call, Response<List<messages>> response) {
                 listaMensajes = response.body();
 
-                Usuario user = new Usuario("Bryan", "bty@test.com", "Bryan0xFF", "abc");
+                user user = new user("Bryan", "bty@test.com", "Bryan0xFF", "abc");
                 //intanciar mi BaseAdapter de chats
                 LvMensajes.setAdapter(new BubblesInflater(IndividualChat.this, listaMensajes,user));
             }

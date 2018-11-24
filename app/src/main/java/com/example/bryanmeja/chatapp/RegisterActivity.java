@@ -1,6 +1,5 @@
 package com.example.bryanmeja.chatapp;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,18 +7,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bryanmeja.chatapp.clasesJSON.Usuario;
+import com.example.bryanmeja.chatapp.clasesJSON.user;
 import com.example.bryanmeja.chatapp.services.API;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
     EditText etName, etEmail, etUserName, etPassword;
-    Usuario user;
+    com.example.bryanmeja.chatapp.clasesJSON.user user;
     String name, email, userName, password;
     TextView btnRegistrar;
     @Override
@@ -32,13 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
         etUserName = findViewById(R.id.etUsuario);
         etPassword = findViewById(R.id.etPassword);
 
-        Start();
-
-
-
-    }
-
-    public void Start(){
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,36 +41,33 @@ public class RegisterActivity extends AppCompatActivity {
                 userName = etUserName.getText().toString();
                 password = etPassword.getText().toString();
 
-                final Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://10.200.215.34:3000")
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://192.168.43.63:3000")
+                        .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-                final API api = retrofit.create(API.class);
+                API api = retrofit.create(API.class);
 
-                user = new Usuario(name, email, userName, password);
-                api.signup(user).enqueue(new Callback<Usuario>() {
+                user = new user(name, email, userName, password);
+
+                api.signup(user).enqueue(new Callback<com.example.bryanmeja.chatapp.clasesJSON.user>() {
                     @Override
-                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                        Toast.makeText(RegisterActivity.this, "Agregado Exitosamente", Toast.LENGTH_LONG).show();
-                        Intent a = new Intent(RegisterActivity.this, MainActivity.class);
-                        startActivity(a);
+                    public void onResponse(Call<com.example.bryanmeja.chatapp.clasesJSON.user> call, Response<com.example.bryanmeja.chatapp.clasesJSON.user> response) {
+                        Toast.makeText(RegisterActivity.this, "Sended", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
-                    public void onFailure(Call<Usuario> call, Throwable t) {
-                        Toast.makeText(RegisterActivity.this, "Error al agregar", Toast.LENGTH_LONG).show();
-                        Intent a = new Intent(RegisterActivity.this, MainActivity.class);
-                        startActivity(a);
+                    public void onFailure(Call<com.example.bryanmeja.chatapp.clasesJSON.user> call, Throwable t) {
+                        Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+
                     }
                 });
-
-
-
 
             }
         });
 
     }
+
 
 
 }
