@@ -54,7 +54,7 @@ public class BubblesInflater extends BaseAdapter {
             if (mensajes.get(position).usuario_emisor.compareTo(MainActivity.usuarioActual.username) == 0){
                 view = inflater.inflate(R.layout.my_message, null);
                 TextView mensaje = view.findViewById(R.id.message_body);
-                mensaje.setText(mensajes.get(position).mensaje);
+                mensaje.setText(zigzag.Descifrar(mensajes.get(position).mensaje, 5));
             }else{
                 view = inflater.inflate(R.layout.their_message, null);
                 TextView mensaje = view.findViewById(R.id.their_body);
