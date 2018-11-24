@@ -140,8 +140,7 @@ public class IndividualChat extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         if (menuItem.getTitle().equals("Imágenes")) {
-
-                            Toast.makeText(IndividualChat.this, "Vamos a mandar imágenes", Toast.LENGTH_SHORT).show();
+                            fileSearch();
                             return true;
                         }
                         else
@@ -167,7 +166,7 @@ public class IndividualChat extends AppCompatActivity {
     private void fileSearch() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/*");
+        intent.setType("*/*");
         startActivityForResult(intent,READ_REQUEST_CODE);
     }
 
