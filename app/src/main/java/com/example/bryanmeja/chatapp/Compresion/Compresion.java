@@ -1,10 +1,15 @@
 package com.example.bryanmeja.chatapp.Compresion;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -234,5 +239,63 @@ public class Compresion {
             originalFilePath = path;
             extension = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("."));
         }
+
+         public String ImageCompress(String path)   {
+             if(path.endsWith("jpg")|| path.endsWith("JPG"))
+             {
+                 Bitmap bitmap = BitmapFactory.decodeFile(path);
+                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArray);
+                 byte[] b = byteArray.toByteArray();
+                 String encoded = android.util.Base64.encodeToString(b, android.util.Base64.DEFAULT);
+                 return encoded;
+             }
+             else
+             {
+                 Bitmap bitmap = BitmapFactory.decodeFile(path);
+                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+                 bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArray);
+                 byte[] b = byteArray.toByteArray();
+                 String encoded = android.util.Base64.encodeToString(b, android.util.Base64.DEFAULT);
+                 return encoded;
+
+             }
+         }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void ImageDecompress(String data, String path)
+    {
+        if(path.endsWith("jpg")|| path.endsWith("JPG"))
+        {
+            byte[] decoded = android.util.Base64.decode(data, android.util.Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decoded,0,decoded.length);
+            try(FileOutputStream out = new FileOutputStream(path))
+            {
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,out);
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        else
+        {
+            byte[] decoded = android.util.Base64.decode(data, android.util.Base64.DEFAULT);
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decoded,0,decoded.length);
+            try(FileOutputStream out = new FileOutputStream(path)) {
+
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }
